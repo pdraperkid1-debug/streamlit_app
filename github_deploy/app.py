@@ -9,9 +9,13 @@ st.set_page_config(page_title="TD D&D Streamlit", layout="wide")
 
 # --- Configuration & Constants ---
 SCREEN_WIDTH, SCREEN_HEIGHT = 1000, 700
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 def load_pil_image(filepath, scale=4):
     try:
+        # Ensure we use absolute path relative to the script
+        if not os.path.isabs(filepath):
+            filepath = os.path.join(BASE_DIR, filepath)
         img = Image.open(filepath).convert("RGBA")
         return img.resize((img.width * scale, img.height * scale), Image.NEAREST)
     except Exception as e:
